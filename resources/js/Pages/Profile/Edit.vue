@@ -1,43 +1,50 @@
 <script setup>
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout.vue';
-import DeleteUserForm from './Partials/DeleteUserForm.vue';
+import TelegramForm from "./Partials/TelegramForm.vue";
+import UpdateTelegramForm from "./Partials/UpdateTelegramForm.vue";
 import UpdatePasswordForm from './Partials/UpdatePasswordForm.vue';
-import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm.vue';
-import { Head } from '@inertiajs/inertia-vue3';
+import Card from "@/Components/Card.vue";
+import {Head} from '@inertiajs/inertia-vue3';
 
 defineProps({
     mustVerifyEmail: Boolean,
     status: Boolean,
+    telegram: Object
 });
 </script>
 
 <template>
-    <Head title="Profile" />
+    <Head title="Profile"/>
 
     <AuthenticatedLayout>
         <template #header>
             <h2 class="font-semibold text-xl text-gray-800 leading-tight">
-                Profile
+                Профиль
             </h2>
         </template>
 
         <div class="py-12">
             <div class="max-w-7xl mx-auto sm:px-6 lg:px-8 space-y-6">
-                <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                    <UpdateProfileInformationForm
-                        :must-verify-email="mustVerifyEmail"
-                        :status="status"
-                        class="max-w-xl"
-                    />
-                </div>
-
-                <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                    <UpdatePasswordForm class="max-w-xl" />
-                </div>
-
-                <div class="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
-                    <DeleteUserForm class="max-w-xl" />
-                </div>
+                <Card v-if="$page.props.auth.user.is_admin">
+                    <template #header>
+                        <h2 class="text-lg font-medium text-gray-900">Установки бота</h2>
+                    </template>
+                    <TelegramForm :telegram="telegram" class="p-6"/>
+                </Card>
+                <Card>
+                    <template #header>
+                        <h2 class="text-lg font-medium text-gray-900">Привязка телеграм</h2>
+                    </template>
+                    <UpdateTelegramForm :telegram="telegram" class="p-6"/>
+                </Card>
+                <Card>
+                    <template #header>
+                        <h2 class="text-lg font-medium text-gray-900">Изменение пароля</h2>
+                        <p class="mt-1 text-sm text-gray-600">Убедитесь, что в вашей учетной записи используется длинный
+                            случайный пароль, чтобы оставаться в безопасности.</p>
+                    </template>
+                    <UpdatePasswordForm class="p-6"/>
+                </Card>
             </div>
         </div>
     </AuthenticatedLayout>

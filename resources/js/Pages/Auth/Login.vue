@@ -8,6 +8,7 @@ import { Head, useForm } from '@inertiajs/inertia-vue3';
 
 defineProps({
     status: String,
+    message: String,
 });
 
 const form = useForm({
@@ -26,8 +27,11 @@ const submit = () => {
     <GuestLayout>
         <Head title="Log in" />
 
-        <div v-if="status" class="mb-4 font-medium text-sm text-green-600">
+        <div v-if="status" class="bg-green-100 rounded-lg py-5 px-6 mb-4 text-base text-green-700 mb-3" role="alert">
             {{ status }}
+        </div>
+        <div v-if="$page.props.flash.message" class="bg-red-100 rounded-lg py-5 px-6 mb-4 text-base text-red-700 mb-3" role="alert">
+            {{ $page.props.flash.message }}
         </div>
 
         <form @submit.prevent="submit">

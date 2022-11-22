@@ -20,5 +20,9 @@
         "vue": "^3.2.41"
     },
     "dependencies": {
+        "@k90mirzaei/vue-toast": "1.0.3",
+        "dayjs": "1.11.6",
+        "laravel-vue-pagination": "4.0.0",
+        "litepie-datepicker": "1.0.14"
     }
 }
